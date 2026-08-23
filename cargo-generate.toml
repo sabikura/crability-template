@@ -1,0 +1,30 @@
+[template]
+ignore = [".git"]
+
+# `crability new-project` fills crability_bin from its own config. The default below only
+# matters when running cargo-generate by hand.
+
+[placeholders.crability_bin]
+type = "string"
+prompt = "Directory where crability symlinks the toolchain (rustc, clang, qemu-system-morello)"
+default = "$HOME/.crability/bin"
+
+[placeholders.platform]
+type = "string"
+prompt = "Target platform (qemu-el1 boots plain virt at EL1 through the runtime's hybrid feature, no EL2 stub)"
+choices = ["fvp", "qemu", "qemu-el1"]
+default = "fvp"
+
+[placeholders.purecap_source]
+type = "string"
+prompt = "Path to a local aarch64-purecap checkout (leave empty to use the git dependency)"
+default = ""
+
+# QEMU's virt machine boots the ELF directly, so only those platforms get the run
+# script and the integration tests that ride on it
+[conditional.'platform == "fvp"']
+ignore = ["run-qemu.sh", "tests"]
+
+# qemu-el1 boots through the runtime's hybrid entry, so it has no EL2 stub blob
+[conditional.'platform == "qemu-el1"']
+ignore = ["src/el2", "el2.ld"]
