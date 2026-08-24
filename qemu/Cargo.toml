@@ -1,0 +1,16 @@
+[package]
+name = "{{project-name}}"
+version = "0.1.0"
+edition = "2021"
+
+# The default test harness needs the `test` crate, which does not exist for the
+# purecap target
+[[bin]]
+name = "{{project-name}}"
+path = "src/main.rs"
+test = false
+
+# The hybrid feature makes _el1_entry start with an A64 prologue that enables
+# capability instructions and switches to C64, so plain -M virt can enter it at EL1
+[dependencies]
+aarch64-purecap-rt = { git = "https://github.com/sabikura/aarch64-purecap.git", features = ["hybrid"] }

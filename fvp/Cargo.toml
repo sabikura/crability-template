@@ -1,0 +1,14 @@
+[package]
+name = "{{project-name}}"
+version = "0.1.0"
+edition = "2021"
+
+# The default test harness needs the `test` crate, which does not exist for the
+# purecap target
+[[bin]]
+name = "{{project-name}}"
+path = "src/main.rs"
+test = false
+
+[dependencies]
+aarch64-purecap-rt = { git = "https://github.com/sabikura/aarch64-purecap.git" }

@@ -1,6 +1,6 @@
 use std::io::Write;
 use std::path::PathBuf;
-{% if platform != "qemu-el1" %}
+
 fn create_el2_entry_bin() -> PathBuf {
     let out_dir = PathBuf::from(std::env::var_os("OUT_DIR").unwrap());
     let project_dir = PathBuf::from(std::env::var_os("CARGO_MANIFEST_DIR").unwrap());
@@ -44,21 +44,18 @@ fn create_el2_entry_bin() -> PathBuf {
 
     bin
 }
-{% endif %}
+
 fn main() {
     println!("cargo:rerun-if-changed=build.rs");
-
-    let out_dir = PathBuf::from(std::env::var_os("OUT_DIR").unwrap());
-{%- if platform != "qemu-el1" %}
     println!("cargo:rerun-if-changed=src/el2/entry.S");
 
+    let out_dir = PathBuf::from(std::env::var_os("OUT_DIR").unwrap());
     let el2_bin = create_el2_entry_bin();
 
     println!(
         "cargo:rustc-env=EL2_ENTRY_BIN={}",
         el2_bin.to_str().unwrap()
     );
-{%- endif %}
 
     std::fs::File::create(out_dir.join("memory.x"))
         .unwrap()
