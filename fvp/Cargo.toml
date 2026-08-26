@@ -12,3 +12,4 @@ test = false
 
 [dependencies]
 aarch64-purecap-rt = { git = "https://github.com/sabikura/aarch64-purecap.git" }
+pl011-uart = { git = "https://github.com/sabikura/pl011-uart.git" }

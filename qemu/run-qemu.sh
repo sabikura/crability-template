@@ -8,8 +8,11 @@
 
 ELF="${1:-target/aarch64-unknown-none-purecap/release/{{project-name}}}"
 
+echo "Starting QEMU. To quit: press ctrl+a, then x." >&2
+
 exec "$CRABILITY_BIN/qemu-system-morello" \
     -M virt \
     -cpu morello \
     -nographic \
+    -semihosting \
     -kernel "$ELF"

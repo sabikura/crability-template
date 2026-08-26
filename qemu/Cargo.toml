@@ -5,6 +5,9 @@ edition = "2021"
 
 # The default test harness needs the `test` crate, which does not exist for the
 # purecap target
+[lib]
+test = false
+
 [[bin]]
 name = "{{project-name}}"
 path = "src/main.rs"
@@ -14,3 +17,4 @@ test = false
 # capability instructions and switches to C64, so plain -M virt can enter it at EL1
 [dependencies]
 aarch64-purecap-rt = { git = "https://github.com/sabikura/aarch64-purecap.git", features = ["hybrid"] }
+pl011-uart = { git = "https://github.com/sabikura/pl011-uart.git" }
